@@ -39,7 +39,7 @@ function handleStep(){
         .st('font-size',d=>{
                 return d.yr>20? '0': '10'
             })
-        // .st('display',d=>{
+        // .st('display',d=>{ 
         //     return d.yr>20? 'none': 'visible'
         // })
     }
