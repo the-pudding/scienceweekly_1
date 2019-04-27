@@ -1,16 +1,30 @@
 <section class='story'>
-    <div class='chart'>
-        <div class='chart-meta'></div>
-        <div class='chart-nav'>
-            <div class='btn' id='btn-1'>step 1</div>
-            <div class='btn' id='btn-2'>step 2</div>
-            <div class='btn' id='btn-3'>step 3</div>
-            <div class='btn' id='btn-4'>step 4</div>
-            <div class='btn' id='btn-5'>step 5</div>
-            <div class='btn' id='btn-6'>step 6</div>
+
+    <div class='nav-bar'>
+  
+        <div class='btn-back'>
+            <img class='nav-btn-img' src='assets/images/back.png'>
         </div>
-        <figure class='chart-fig'>
-            {{!-- <svg class = 'viz'></svg> --}}
-        </figure>
+        <div class='current-slide-num'>1/5</div>
+        <div class='btn-fwd'>
+            <img class='nav-btn-img' src='assets/images/fwd.png'>
+        </div>
+
     </div>
+    <div class='chart-static'>
+        <div class='chart-static-meta'>
+            <p class='chart-static-title'>1. Likelihood that original study data is accessible varies by that study's age</p>
+        </div>
+        <div class='chart-static-container'>
+            <img 'chart-static-img' src='assets/images/availability_time.png'>
+        </div>
+        <div class='chart-dynamic hidden'>
+        </div>
+    </div>
+    <div class='prose'>
+        <p class='prose-para part-1'>{{{doc.part-1}}}</p>
+        <p class='prose-para part-2 hidden'>{{{doc.part-2}}}</p>
+        <p class='prose-para part-3 hidden'>{{{doc.part-3}}}</p>
+        <p class='prose-para part-4 hidden'>{{{doc.part-4}}}</p>
+    </div> 
 </section>

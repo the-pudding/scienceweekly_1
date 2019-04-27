@@ -1,17 +1,16 @@
 /* eslint-disable prettier/prettier */
-let thesisData;
 let data;
-let $svg;
-let $chart;
-let $chartPara;
-let $steps;
+let $prose;
 
-let $step1;
-let $step2;
-let $step3;
-let $step4;
-let $step5;
-let $step6;
+let $chartStatic;
+let $chartDynamic;
+let $chartPara;
+
+
+let currentStep = 1
+let $backButton;
+let $fwdButton;
+let $slideIndicator;
 
 let sentencesJoin;
 let $sentences;
@@ -21,6 +20,117 @@ let colScale;
 
 
 /* global d3 */
+
+function updateCopy(){
+    $prose.selectAll('.prose-para')
+    .classed('hidden',true)
+
+    $prose.select(`p.part-${currentStep}`)
+    .classed('hidden',false)
+}
+
+function updateStepIndicator(){
+    $slideIndicator
+        .text(`${currentStep}/5`)
+    
+    if(currentStep===1){
+        $chartStatic.classed('hidden', false)
+        $chartDynamic.classed('hidden', true)
+        updateCopy()
+    }
+    if(currentStep===2){
+        $chartStatic.classed('hidden', true)
+        $chartDynamic.classed('hidden', false)
+
+        $sentences
+        .transition()
+        .delay(1000)
+        .st('font-size',5)
+ 
+        $chartPara
+        .transition()
+        .delay(1000)
+        .st('line-height','0.4')
+
+        $sentences        
+        .st('background-color','#FFFFFF')
+        .st('color','#000000')
+
+        updateCopy()
+    }
+
+    if(currentStep===3){
+
+        $chartStatic.classed('hidden', true)
+        $chartDynamic.classed('hidden', false)
+
+        $chartPara
+        .st('line-height','0.4')
+
+        $sentences
+        .st('font-size',5)
+
+        $sentences
+        .transition()
+        .st('background-color',d=>colScale(likelihoodScale(d.yr)))
+        .st('color',d=>colScale(likelihoodScale(d.yr)))
+        .st('display','visible')
+
+        $sentences
+        .classed('hidden',false)
+
+        
+        updateCopy()
+    }
+    
+    if(currentStep===4){
+
+        $chartStatic.classed('hidden', true)
+        $chartDynamic.classed('hidden', false)
+
+        $sentences
+        .classed('hidden',d=>{
+            return d.yr>10? true : false
+        })
+        
+        updateCopy()
+    }
+
+       
+    if(currentStep===5){
+
+        $chartStatic.classed('hidden', true)
+        $chartDynamic.classed('hidden', false)
+
+        $sentences
+        .classed('hidden',d=>{
+            return d.yr>20? true : false
+        })
+        
+        updateCopy()
+    }
+
+}
+
+
+
+
+
+function handleClickBack(){
+    if (currentStep===1){}
+    else{
+        currentStep-=1
+        updateStepIndicator()
+    }
+}
+function handleClickForward(){
+    if (currentStep===5){}
+    else{
+        currentStep+=1
+        updateStepIndicator()
+    }
+}
+
 
 function handleStep(){
     const stepNum = +d3.select(this).at('id').split('-')[1]
@@ -33,10 +143,6 @@ function handleStep(){
 
         $sentences
         .st('background-color',d=>{
-          //   console.log(+d.yr);
-            console.log(likelihoodScale(d.yr));
-            console.log(colScale(likelihoodScale(d.yr)))
-  
             return (colScale(likelihoodScale(d.yr)))
         });
 
@@ -48,9 +154,6 @@ function handleStep(){
     $chartPara
         .st('line-height','0.7')
    
-        // .st('display',d=>{ 
-        //     return d.yr>20? 'none': 'visible'
-        // })
     }
     else if (stepNum===3){
         $sentences
@@ -99,13 +202,18 @@ function resize() {
 
 function setupDOM() {
 
-    // $svg = d3.select('#viz');
-    $chart = d3.select('figure.chart-fig');
-    $steps = d3.selectAll('.btn')
+    $chartStatic = d3.select('div.chart-static-container');
+    $chartDynamic = d3.select('div.chart-dynamic');
+    $prose = d3.select('div.prose')
+
+    $backButton = d3.select('.btn-back')
+    $fwdButton = d3.select('.btn-fwd')
+    $slideIndicator = d3.select('.current-slide-num')
   }
   
   function render() {
-    $chartPara = $chart
+
+    $chartPara = $chartDynamic
         .append('p.sentence-box')
 
     sentencesJoin = $chartPara
@@ -117,7 +225,12 @@ function setupDOM() {
   
     $sentences.text(d => d.sentence)
 
-    $steps.on('click',handleStep)
+    // $steps.on('click',handleStep)
+
+    $backButton.on('click',handleClickBack)
+    $fwdButton.on('click',handleClickForward)
+
+
   }
   
   function init() {
@@ -133,9 +246,6 @@ function setupDOM() {
           reject(error);
         } else {
           data = cleanData(response[0]);
-        //   thesisData = response[0]
-  
-        //   console.log(data)
 
           resize();
           setupDOM();

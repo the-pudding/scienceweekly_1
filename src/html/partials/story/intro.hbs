@@ -1,24 +1,36 @@
 <div class='intro'>
     <div class='header'>
-        <div class ='header-component logo'> 
-            <img src='assets/images/pudding-p.png'>
-        </div>
-        <div class ='header-component title'>
-            <p class='header-title__top'>{{{doc.header-title__top}}}</p>
-            <p class='header-title__middle'>{{{doc.header-title__middle}}}</p>
-            <p class='header-title__bottom'>{{{doc.header-title__bottom}}}</p>
-        </div>
-        <div class ='header-component journal-cover'>
-            <img src='assets/images/pudding-cover.png'>
-        </div>
+        <img src='assets/images/cover.png'>
     </div>
 
-	<h1 class='intro__hed'>{{meta.title}}</h1>
-	<p class='intro__dek'>{{meta.description}}</p>
-	<p class='intro__byline'>By
+	<div class='intro__hed'>{{meta.title}}</div>
+	<p class='intro__byline'>
 		<a href='{{meta.author.url}}' target='_blank'>
 			<strong>{{meta.author.name}}</strong>
 		</a>
 	</p>
-	<time class='intro__time'>April 2019</time>
+    <p class='intro__address'>{{meta.author.address}}</p>
+	{{!-- <time class='intro__time'>April 2019</time> --}}
+    <div class='pre-article-box'>
+        <div class='article-info'>
+            <div class='article-info-title'>ARTICLE INFO</div>
+            <div class='keyword-box'>
+                <p class='keywords-title'>Keywords</p>
+                <p class='keywords-list'>Replication</p>
+                <p class='keywords-list'>Data availability</p>
+                <p class='keywords-list'>Meta science</p>
+                <p class='keywords-list'>Pudding</p>
+            </div>
+        </div>
+        <div class='article-abstract'>
+            <div class='article-abstract-title'>ABSTRACT</div>
+            
+            <div class='abstract-text'>                
+                		{{#each doc.background}}
+                        <p>{{{value}}}</p>
+                        {{/each}}
+                
+            </div>
+        </div>
+    </div>
 </div>

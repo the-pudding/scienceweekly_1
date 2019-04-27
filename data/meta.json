@@ -1,5 +1,5 @@
 {
-	"title": "Science Weekly: How much data lies behind the paper you're reading?",
+	"title": "How much data lies behind the paper you're reading?",
 	"description": "In this edition of Science Weekly, we look at the raw data behind the paper: how well does science cater to replications of analyses?",
 	"url": "https://pudding.cool/2019/04/science_weekly_1/",
 	"keywords": "data replication science",
@@ -8,7 +8,8 @@
 	"author": {
 		"name": "Ilia Blinderman",
 		"url": "https://pudding.cool/author/ilia-blinderman",
-		"twitterHandle": "@iliablinderman"
+        "twitterHandle": "@iliablinderman",
+        "address":"The Pudding, New York City, NY, USA, 10101"
 	},
 	"analytics": "",
 	"lorem": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis mollis neque sit amet sollicitudin vehicula. Maecenas fringilla mi non lacus mattis elementum. Curabitur dignissim faucibus justo."
