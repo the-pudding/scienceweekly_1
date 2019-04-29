@@ -1,6 +1,5 @@
 /* CUSTOM STORY STYLE */
 
-
 .nav-bar
     max-width: 50rem
     margin 0 auto
@@ -56,15 +55,20 @@
     font-family: 'Tinos'
     font-size 24px
     font-weight: 600
+    margin-top 0
 
 .chart-static-img
     width 100%
     height auto
 
+.legend
+    margin 0 auto
+
 .legend-title
     text-align: center
     margin 0
     font-family: 'Tinos'
+    font-weight: 600
 
 .legend-item-container
     display: flex
@@ -72,11 +76,34 @@
     justify-content: space-evenly
     margin 0
 
+.legend-item-labels-container
+    display: flex
+    flex-direction: row
+    justify-content: space-evenly
+    margin 0
+
 .legend-item
+    flex-grow: 1
+    text-align: center
+    font-size: 8px
+    
+.legend-item-text
     font-family: 'Arial'
     flex-grow: 1
     text-align: center
-    
+    font-size: 16px
 
 .hidden
     display none
+
+.method
+    max-width $column-width
+    margin 0 auto
+
+.method-title
+    text-align: center
+    font-weight: 600
+
+.method-text
+    font-family: 'Tinos'
+    font-size: 14px

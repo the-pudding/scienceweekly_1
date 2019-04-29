@@ -2,13 +2,19 @@
 let data;
 let $prose;
 
+let chartWidth;
+
 let $chartStatic;
+let $chartStaticTitle;
 let $chartDynamic;
 let $chartPara;
+
 let $legend;
 let $legendTitle;
 let $legendItemContainer;
+let $legendItemLabelsContainer;
 let $legendItems;
+let $legendItemsText;
 
 
 let currentStep = 1
@@ -40,16 +46,27 @@ function updateStepIndicator(){
     if(currentStep===1){
         $chartStatic.classed('hidden', false)
         $chartDynamic.classed('hidden', true)
+
+        $chartStaticTitle.text("1. Likelihood that original study data is accessible varies by that study's age")
+
+        $sentences        
+        .st('font-size',18)
+
+        $chartPara
+        .st('line-height','1.65')
+
         updateCopy()
     }
     if(currentStep===2){
         $chartStatic.classed('hidden', true)
         $chartDynamic.classed('hidden', false)
 
+        $chartStaticTitle.text("2. A concrete example")
+
         $sentences
         .transition()
         .delay(1000)
-        .st('font-size',5)
+        .st('font-size',4.5)
  
         $chartPara
         .transition()
@@ -60,6 +77,20 @@ function updateStepIndicator(){
         .st('background-color','#FFFFFF')
         .st('color','#000000')
 
+
+
+        $legendTitle
+            .classed('hidden',true)
+        $legendItemContainer
+            .classed('hidden',true)
+        $legendItemLabelsContainer
+            .classed('hidden',true)
+        $legendItems
+            .classed('hidden',true)
+        $legendItemsText
+            .classed('hidden',true)
+
+
         updateCopy()
     }
 
@@ -67,6 +98,8 @@ function updateStepIndicator(){
 
         $chartStatic.classed('hidden', true)
         $chartDynamic.classed('hidden', false)
+
+        $chartStaticTitle.text("3. Citation, by citation: likelihood of data availability")
 
         $chartPara
         .st('line-height','0.4')
@@ -83,10 +116,18 @@ function updateStepIndicator(){
         $sentences
         .classed('hidden',false)
 
-        $legend
-        .classed('hidden',false)
-
+        $legendTitle
+            .classed('hidden',false)
+        $legendItemContainer
+            .classed('hidden',false)
+        $legendItemLabelsContainer
+            .classed('hidden',false)
+        $legendItems
+            .classed('hidden',false)
+        $legendItemsText
+            .classed('hidden',false)
         
+
         updateCopy()
     }
     
@@ -95,6 +136,8 @@ function updateStepIndicator(){
         $chartStatic.classed('hidden', true)
         $chartDynamic.classed('hidden', false)
 
+        $chartStaticTitle.text("4. What's left?")
+
         $sentences
         .classed('hidden',d=>{
             return d.yr>10? true : false
@@ -102,7 +145,17 @@ function updateStepIndicator(){
         
         updateCopy()
     }
+    
+    if(currentStep===5){
 
+        $chartStatic.classed('hidden', true)
+        $chartDynamic.classed('hidden', true)
+
+        $chartStaticTitle.text("5. Method")
+   
+        
+        updateCopy()
+    }
 
 }
 
@@ -146,7 +199,7 @@ function setupDOM() {
     $chartStatic = d3.select('div.chart-static-container');
     $chartDynamic = d3.select('div.chart-dynamic');
 
-
+    $chartStaticTitle = d3.select('p.chart-static-title')
 
     $prose = d3.select('div.prose')
 
@@ -171,13 +224,21 @@ function setupDOM() {
     $backButton.on('click',handleClickBack)
     $fwdButton.on('click',handleClickForward)
 
-    $legend = d3.select('div.chart-dynamic')
-    $legendTitle = $legend.append('p.legend-title')
+    $legendTitle = $chartDynamic.append('p.legend-title')
+    $legend = $chartDynamic.append('div.legend')
+    $legendItemLabelsContainer = $legend.append('p.legend-item-labels-container')
     $legendItemContainer = $legend.append('p.legend-item-container')
 
     $legendTitle
         .text('Likelihood of original data availability')
         // .classed('hidden', true)
+
+
+    $legendItemsText = $legendItemLabelsContainer
+        .selectAll('span.legend-item-text')
+        .data(legendPercentages)
+        .enter()
+        .append('span.legend-item-text')
 
     $legendItems = $legendItemContainer
         .selectAll('span.legend-item')
@@ -185,11 +246,35 @@ function setupDOM() {
         .enter()
         .append('span.legend-item')
 
-    $legendItems
+    $legendItemsText
         .text(d=>`>${d}%`)
-        .st('background-color', d=>colScale(d/100))
 
+    $legendItems        
+        .st('background-color', d=>colScale(d/100))
+        .text(d=>`>${d}%`)
+        .st('color', d=>colScale(d/100))
+
+    $legendTitle
+        .classed('hidden',true)
+    $legendItemContainer
+        .classed('hidden',true)
+    $legendItemLabelsContainer
+        .classed('hidden',true)
+    $legendItems
+        .classed('hidden',true)
+    $legendItemsText
+        .classed('hidden',true)
+    
+    
+    chartWidth = $chartStatic.node().offsetWidth
+    
+    $legend 
+        .st('max-width',chartWidth/3)
+
+    // $legend
+    
   }
+
   
   function init() {
     return new Promise((resolve, reject) => {
