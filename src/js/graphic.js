@@ -5,6 +5,10 @@ let $prose;
 let $chartStatic;
 let $chartDynamic;
 let $chartPara;
+let $legend;
+let $legendTitle;
+let $legendItemContainer;
+let $legendItems;
 
 
 let currentStep = 1
@@ -17,7 +21,7 @@ let $sentences;
 let likelihoodScale;
 let colScale;
 
-
+let legendPercentages = [90,80,70,62.5]
 
 /* global d3 */
 
@@ -79,6 +83,9 @@ function updateStepIndicator(){
         $sentences
         .classed('hidden',false)
 
+        $legend
+        .classed('hidden',false)
+
         
         updateCopy()
     }
@@ -96,25 +103,8 @@ function updateStepIndicator(){
         updateCopy()
     }
 
-       
-    if(currentStep===5){
-
-        $chartStatic.classed('hidden', true)
-        $chartDynamic.classed('hidden', false)
-
-        $sentences
-        .classed('hidden',d=>{
-            return d.yr>20? true : false
-        })
-        
-        updateCopy()
-    }
 
 }
-
-
-
-
 
 function handleClickBack(){
     if (currentStep===1){}
@@ -129,55 +119,6 @@ function handleClickForward(){
         currentStep+=1
         updateStepIndicator()
     }
-}
-
-
-function handleStep(){
-    const stepNum = +d3.select(this).at('id').split('-')[1]
-    
-    if(stepNum===1){
-       
-    }
-    else if (stepNum===2){
-
-
-        $sentences
-        .st('background-color',d=>{
-            return (colScale(likelihoodScale(d.yr)))
-        });
-
-
-        $sentences
-        .transition()
-        .st('font-size',10)
-    
-    $chartPara
-        .st('line-height','0.7')
-   
-    }
-    else if (stepNum===3){
-        $sentences
-        .transition()
-        .duration(1000)
-        .st('font-size',d=>{
-                return d.yr>20? '0': '10'
-            })
-    }
-    else if (stepNum===4){
-        $sentences
-        .transition()
-        .st('display',d=>{
-            return d.yr>15? 'none': 'visible'
-        })
-    }
-    else if (stepNum===5){
-        $sentences
-        .transition()
-        .st('display',d=>{
-            return d.yr>10? 'none': 'visible'
-        })
-    }
-    else if (stepNum===6){}
 }
 
 
@@ -204,6 +145,9 @@ function setupDOM() {
 
     $chartStatic = d3.select('div.chart-static-container');
     $chartDynamic = d3.select('div.chart-dynamic');
+
+
+
     $prose = d3.select('div.prose')
 
     $backButton = d3.select('.btn-back')
@@ -222,14 +166,28 @@ function setupDOM() {
       .enter();
   
     $sentences = sentencesJoin.append('span.sentence');
-  
     $sentences.text(d => d.sentence)
-
-    // $steps.on('click',handleStep)
 
     $backButton.on('click',handleClickBack)
     $fwdButton.on('click',handleClickForward)
 
+    $legend = d3.select('div.chart-dynamic')
+    $legendTitle = $legend.append('p.legend-title')
+    $legendItemContainer = $legend.append('p.legend-item-container')
+
+    $legendTitle
+        .text('Likelihood of original data availability')
+        // .classed('hidden', true)
+
+    $legendItems = $legendItemContainer
+        .selectAll('span.legend-item')
+        .data(legendPercentages)
+        .enter()
+        .append('span.legend-item')
+
+    $legendItems
+        .text(d=>`>${d}%`)
+        .st('background-color', d=>colScale(d/100))
 
   }
   
