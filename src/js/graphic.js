@@ -1,13 +1,17 @@
 /* eslint-disable prettier/prettier */
+
 let data;
 let $prose;
 
 let chartWidth;
+let $cover;
 
 let $chartStatic;
+let $chartStaticImg;
 let $chartStaticTitle;
 let $chartDynamic;
 let $chartPara;
+let $story;
 
 let $legend;
 let $legendTitle;
@@ -29,7 +33,19 @@ let colScale;
 
 let legendPercentages = [90,80,70,62.5]
 
+let paraHeight;
+
 /* global d3 */
+
+function handleCoverClick(){
+    d3.select('.cover-container')
+    .classed('hidden',true)
+
+    d3.select('section.story')
+        .classed('hidden', false)
+        
+        
+}
 
 function updateCopy(){
     $prose.selectAll('.prose-para')
@@ -41,36 +57,51 @@ function updateCopy(){
 
 function updateStepIndicator(){
     $slideIndicator
-        .text(`${currentStep}/5`)
+        .text(`${currentStep}/6`)
     
     if(currentStep===1){
         $chartStatic.classed('hidden', false)
         $chartDynamic.classed('hidden', true)
 
-        $chartStaticTitle.text("1. Likelihood that original study data is accessible varies by that study's age")
+        $chartStaticImg
+            .at('src','assets/images/crisis.png')
 
-        $sentences        
-        .st('font-size',18)
+        $chartStaticTitle.text("1. A crisis in psychology")
 
         $chartPara
         .st('line-height','1.65')
 
         updateCopy()
     }
+    
     if(currentStep===2){
+        $chartStatic.classed('hidden', false)
+        $chartDynamic.classed('hidden', true)
+
+
+
+        $chartStaticImg
+            .at('src','assets/images/availability_time.png')
+
+
+        $chartStaticTitle.text("2. Likelihood that original study data is accessible varies by that study's age")
+
+        $chartPara
+        .st('line-height','1.65')
+
+        updateCopy()
+    }
+    if(currentStep===3){
         $chartStatic.classed('hidden', true)
         $chartDynamic.classed('hidden', false)
 
-        $chartStaticTitle.text("2. A concrete example")
+        $chartStaticTitle.text("3. A concrete example")
 
         $sentences
-        .transition()
-        .delay(1000)
         .st('font-size',4.5)
+
  
         $chartPara
-        .transition()
-        .delay(1000)
         .st('line-height','0.4')
 
         $sentences        
@@ -94,12 +125,12 @@ function updateStepIndicator(){
         updateCopy()
     }
 
-    if(currentStep===3){
+    if(currentStep===4){
 
         $chartStatic.classed('hidden', true)
         $chartDynamic.classed('hidden', false)
 
-        $chartStaticTitle.text("3. Citation, by citation: likelihood of data availability")
+        $chartStaticTitle.text("4. Citation, by citation: likelihood of data availability")
 
         $chartPara
         .st('line-height','0.4')
@@ -127,16 +158,17 @@ function updateStepIndicator(){
         $legendItemsText
             .classed('hidden',false)
         
+        paraHeight=d3.select('.sentence-box').st('height')
 
         updateCopy()
     }
     
-    if(currentStep===4){
+    if(currentStep===5){
 
         $chartStatic.classed('hidden', true)
         $chartDynamic.classed('hidden', false)
 
-        $chartStaticTitle.text("4. What's left?")
+        $chartStaticTitle.text("5. What's left?")
 
         $sentences
         .classed('hidden',d=>{
@@ -144,17 +176,27 @@ function updateStepIndicator(){
         })
         
         updateCopy()
+
+        d3.select('footer')
+        .classed('hidden',true)
+
+        d3.select('.sentence-box').st('height', paraHeight)
     }
     
-    if(currentStep===5){
+    if(currentStep===6){
 
         $chartStatic.classed('hidden', true)
         $chartDynamic.classed('hidden', true)
 
-        $chartStaticTitle.text("5. Method")
-   
+        $chartStaticTitle.text("6. Method")
         
         updateCopy()
+
+        // d3.select('header')
+        // .classed('hidden',false)
+
+        d3.select('footer')
+        .classed('hidden',false)
     }
 
 }
@@ -167,7 +209,7 @@ function handleClickBack(){
     }
 }
 function handleClickForward(){
-    if (currentStep===5){}
+    if (currentStep===6){}
     else{
         currentStep+=1
         updateStepIndicator()
@@ -178,7 +220,7 @@ function handleClickForward(){
 function cleanData(dirtyData){
   return dirtyData.map(item=>({
         ...item,
-        yr: (2013 - +item.yr)
+        yr: (2013 - +item.alt_year)
     }))
 }
 
@@ -200,15 +242,21 @@ function setupDOM() {
     $chartDynamic = d3.select('div.chart-dynamic');
 
     $chartStaticTitle = d3.select('p.chart-static-title')
+    $chartStaticImg = $chartStatic.select('img')
 
     $prose = d3.select('div.prose')
 
     $backButton = d3.select('.btn-back')
     $fwdButton = d3.select('.btn-fwd')
     $slideIndicator = d3.select('.current-slide-num')
+    $cover = d3.select('.cover-container')
+    $story = d3.select('section.story')
   }
   
   function render() {
+
+
+    $cover.on('click', handleCoverClick)
 
     $chartPara = $chartDynamic
         .append('p.sentence-box')

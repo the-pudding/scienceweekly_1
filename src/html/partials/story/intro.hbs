@@ -1,36 +1,13 @@
 <div class='intro'>
-    <div class='header'>
-        <a href='https://www.pudding.cool'><img src='assets/images/cover.png'></a>
-    </div>
-
-	<div class='intro__hed'>{{meta.title}}</div>
-	<p class='intro__byline'>
-		<a href='{{meta.author.url}}' target='_blank'>
-			<strong>{{meta.author.name}}</strong>
-		</a>
-	</p>
-    <p class='intro__address'>{{meta.author.address}}</p>
-	{{!-- <time class='intro__time'>April 2019</time> --}}
-    <div class='pre-article-box'>
-        <div class='article-info'>
-            <div class='article-info-title'>ARTICLE INFO</div>
-            <div class='keyword-box'>
-                <p class='keywords-title'>Keywords</p>
-                <p class='keywords-list'>Replication</p>
-                <p class='keywords-list'>Data availability</p>
-                <p class='keywords-list'>Meta science</p>
-                <p class='keywords-list'>Pudding</p>
-            </div>
+    <div class='cover-container'>
+        
+        <div class='cover-left'>
+            <img src='assets/images/cover_left_panel.svg'/>
+ 
         </div>
-        <div class='article-abstract'>
-            <div class='article-abstract-title'>ABSTRACT</div>
-            
-            <div class='abstract-text'>                
-                		{{#each doc.background}}
-                        <p>{{{value}}}</p>
-                        {{/each}}
-                
-            </div>
+        <div class='cover-right'>
+            <img src='assets/images/cover_right_panel.svg'/>
         </div>
     </div>
 </div>
+
