@@ -35,16 +35,19 @@ let legendPercentages = [90,80,70,62.5]
 
 let paraHeight;
 
+const $arrow = d3.select('.arrow')
+
 /* global d3 */
 
 function handleCoverClick(){
+    d3.select('body').style('overflow', 'visible')
     d3.select('.cover-container')
     .classed('hidden',true)
 
     d3.select('section.story')
         .classed('hidden', false)
-        
-        
+
+
 }
 
 function updateCopy(){
@@ -58,7 +61,7 @@ function updateCopy(){
 function updateStepIndicator(){
     $slideIndicator
         .text(`${currentStep}/6`)
-    
+
     if(currentStep===1){
         $chartStatic.classed('hidden', false)
         $chartDynamic.classed('hidden', true)
@@ -73,7 +76,7 @@ function updateStepIndicator(){
 
         updateCopy()
     }
-    
+
     if(currentStep===2){
         $chartStatic.classed('hidden', false)
         $chartDynamic.classed('hidden', true)
@@ -100,11 +103,11 @@ function updateStepIndicator(){
         $sentences
         .st('font-size',4.5)
 
- 
+
         $chartPara
         .st('line-height','0.4')
 
-        $sentences        
+        $sentences
         .st('background-color','#FFFFFF')
         .st('color','#000000')
 
@@ -157,12 +160,12 @@ function updateStepIndicator(){
             .classed('hidden',false)
         $legendItemsText
             .classed('hidden',false)
-        
+
         paraHeight=d3.select('.sentence-box').st('height')
 
         updateCopy()
     }
-    
+
     if(currentStep===5){
 
         $chartStatic.classed('hidden', true)
@@ -174,7 +177,7 @@ function updateStepIndicator(){
         .classed('hidden',d=>{
             return d.yr>10? true : false
         })
-        
+
         updateCopy()
 
         d3.select('footer')
@@ -182,14 +185,14 @@ function updateStepIndicator(){
 
         d3.select('.sentence-box').st('height', paraHeight)
     }
-    
+
     if(currentStep===6){
 
         $chartStatic.classed('hidden', true)
         $chartDynamic.classed('hidden', true)
 
         $chartStaticTitle.text("6. Method")
-        
+
         updateCopy()
 
         // d3.select('header')
@@ -202,7 +205,10 @@ function updateStepIndicator(){
 }
 
 function handleClickBack(){
-    if (currentStep===1){}
+    if (currentStep===1){
+      $cover.classed('hidden', false)
+      d3.select('body').style('overflow', 'hidden')
+    }
     else{
         currentStep-=1
         updateStepIndicator()
@@ -252,11 +258,11 @@ function setupDOM() {
     $cover = d3.select('.cover-container')
     $story = d3.select('section.story')
   }
-  
+
   function render() {
 
 
-    $cover.on('click', handleCoverClick)
+    $arrow.on('click', handleCoverClick)
 
     $chartPara = $chartDynamic
         .append('p.sentence-box')
@@ -265,7 +271,7 @@ function setupDOM() {
       .selectAll('span.sentence')
       .data(data)
       .enter();
-  
+
     $sentences = sentencesJoin.append('span.sentence');
     $sentences.text(d => d.sentence)
 
@@ -297,7 +303,7 @@ function setupDOM() {
     $legendItemsText
         .text(d=>`>${d}%`)
 
-    $legendItems        
+    $legendItems
         .st('background-color', d=>colScale(d/100))
         .text(d=>`>${d}%`)
         .st('color', d=>colScale(d/100))
@@ -312,26 +318,26 @@ function setupDOM() {
         .classed('hidden',true)
     $legendItemsText
         .classed('hidden',true)
-    
-    
+
+
     chartWidth = $chartStatic.node().offsetWidth
-    
-    $legend 
+
+    $legend
         .st('max-width',chartWidth/3)
 
     // $legend
-    
+
   }
 
-  
+
   function init() {
     return new Promise((resolve, reject) => {
-        
+
       const thesisFile= 'assets/data/thesis_chunked.csv'
       const articleFile = 'assets/data/article_data.csv';
-     
-      const dataFiles = [articleFile, thesisFile] 
-  
+
+      const dataFiles = [articleFile, thesisFile]
+
       d3.loadData(...dataFiles, (error, response) => {
         if (error) {
           reject(error);
@@ -345,6 +351,5 @@ function setupDOM() {
       });
     });
   }
-  
+
   export default { init, resize };
-  

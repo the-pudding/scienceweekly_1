@@ -1,19 +1,28 @@
 /* CUSTOM STORY STYLE */
+body
+  overflow hidden
 
 .prose-para
     margin-top 0
 
 .nav-bar
-    max-width: 50rem
-    margin 0 auto
+    top 0
+    width 100%
+    margin 0 auto 2rem 0
     display flex
-    flex-direction: row
-    justify-content: center
-    margin-top 5rem
+    flex-direction row
+    justify-content center
+    align-items center
+    height 3rem
+    background-color $off-black
 
 .current-slide-num
     margin 0 1rem
-    font-size: 18px
+    set-type-size('medium', true)
+    color $white
+    font-family $sans-display
+    font-weight 600
+    letter-spacing 2px
 
 .nav-btn-img
     height 1rem
@@ -23,15 +32,43 @@
 
 .btn-back
     display flex
-    flex-direction: column
-    justify-content: center
+    flex-direction column
+    justify-content center
+    align-items center
     cursor pointer
+    background-color $red
+    border-radius 50%
+    width 1.5rem
+    height 1.5rem
+
+    &:hover
+      transform: scale(1.2)
+
+    svg
+      stroke $white
+      width 1rem
+      height 1rem
+      stroke-width 3px
 
 .btn-fwd
     display flex
-    flex-direction: column
-    justify-content: center
+    flex-direction column
+    justify-content center
+    align-items center
     cursor pointer
+    background-color $red
+    border-radius 50%
+    width 1.5rem
+    height 1.5rem
+
+    &:hover
+      transform: scale(1.2)
+
+    svg
+      stroke $white
+      width 1rem
+      height 1rem
+      stroke-width 3px
 
 .chart-nav
     display: flex
@@ -52,6 +89,7 @@
 .chart-static
     max-width 50rem
     margin 0 auto
+    padding 0 1rem
 
 
 .chart-static-title
@@ -91,7 +129,7 @@
     flex-grow: 1
     text-align: center
     font-size: 8px
-    
+
 .legend-item-text
     font-family: 'Arial'
     flex-grow: 1
