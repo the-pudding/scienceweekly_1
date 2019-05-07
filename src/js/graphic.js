@@ -36,16 +36,20 @@ let legendPercentages = [90,80,70,62.5]
 let paraHeight;
 
 const $arrow = d3.select('.arrow')
+const $coverRight = d3.select('.cover-right')
+const $coverLeft = d3.select('.cover-left')
+const $btnfwd = d3.select('.btn-fwd')
 
 /* global d3 */
 
 function handleCoverClick(){
-    d3.select('body').style('overflow', 'visible')
-    d3.select('.cover-container')
-    .classed('hidden',true)
+    //d3.select('body').style('overflow', 'visible')
 
-    d3.select('section.story')
-        .classed('hidden', false)
+    d3.select('section.story').classed('hidden', false)
+
+    $coverRight.classed('slide', true)
+    $coverLeft.classed('slide', true)
+    d3.select('.intro').transition().delay(250).style('display', 'none')
 
 
 }
@@ -54,22 +58,20 @@ function updateCopy(){
     $prose.selectAll('.prose-para')
     .classed('hidden',true)
 
-    $prose.select(`p.part-${currentStep}`)
+    $prose.select(`div.part-${currentStep}`)
     .classed('hidden',false)
 }
 
 function updateStepIndicator(){
+
+  console.log(currentStep)
     $slideIndicator
-        .text(`${currentStep}/6`)
+        .text(`${currentStep}/10`)
 
     if(currentStep===1){
-        $chartStatic.classed('hidden', false)
+        $chartStatic.classed('hidden', true)
         $chartDynamic.classed('hidden', true)
-
-        $chartStaticImg
-            .at('src','assets/images/crisis.png')
-
-        $chartStaticTitle.text("1. A crisis in psychology")
+        $btnfwd.classed('is-disabled', false)
 
         $chartPara
         .st('line-height','1.65')
@@ -80,14 +82,7 @@ function updateStepIndicator(){
     if(currentStep===2){
         $chartStatic.classed('hidden', false)
         $chartDynamic.classed('hidden', true)
-
-
-
-        $chartStaticImg
-            .at('src','assets/images/availability_time.png')
-
-
-        $chartStaticTitle.text("2. Likelihood that original study data is accessible varies by that study's age")
+        $btnfwd.classed('is-disabled', false)
 
         $chartPara
         .st('line-height','1.65')
@@ -96,53 +91,66 @@ function updateStepIndicator(){
     }
     if(currentStep===3){
         $chartStatic.classed('hidden', true)
-        $chartDynamic.classed('hidden', false)
-
-        $chartStaticTitle.text("3. A concrete example")
-
-        $sentences
-        .st('font-size',4.5)
-
+        $chartDynamic.classed('hidden', true)
+        $btnfwd.classed('is-disabled', false)
 
         $chartPara
-        .st('line-height','0.4')
+        .st('line-height','1.65')
+
+        updateCopy()
+    }
+    if(currentStep===4){
+        $chartStatic.classed('hidden', true)
+        $chartDynamic.classed('hidden', true)
+        $btnfwd.classed('is-disabled', false)
+
+        $chartPara
+        .st('line-height','1.65')
+
+        updateCopy()
+    }
+    if(currentStep===5){
+        $chartStatic.classed('hidden', true)
+        $chartDynamic.classed('hidden', true)
+        $btnfwd.classed('is-disabled', false)
+
+        $chartPara
+        .st('line-height','1.65')
+
+        updateCopy()
+    }
+    if(currentStep===6){
+        $chartStatic.classed('hidden', true)
+        $chartDynamic.classed('hidden', false)
+        $btnfwd.classed('is-disabled', false)
+
+        $chartPara
+        .st('line-height','0.6')
+
+        $sentences
+        .st('font-size',6)
 
         $sentences
         .st('background-color','#FFFFFF')
-        .st('color','#000000')
-
-
-
-        $legendTitle
-            .classed('hidden',true)
-        $legendItemContainer
-            .classed('hidden',true)
-        $legendItemLabelsContainer
-            .classed('hidden',true)
-        $legendItems
-            .classed('hidden',true)
-        $legendItemsText
-            .classed('hidden',true)
-
+        .st('color','#282828')
 
         updateCopy()
     }
 
-    if(currentStep===4){
-
+    if(currentStep===7){
         $chartStatic.classed('hidden', true)
         $chartDynamic.classed('hidden', false)
-
-        $chartStaticTitle.text("4. Citation, by citation: likelihood of data availability")
+        $btnfwd.classed('is-disabled', false)
 
         $chartPara
-        .st('line-height','0.4')
+        .st('line-height','0.6')
 
         $sentences
-        .st('font-size',5)
+        .st('font-size',6)
 
         $sentences
-        .transition()
+        .transition(2000)
+        .delay((d, i) => i * 5)
         .st('background-color',d=>colScale(likelihoodScale(d.yr)))
         .st('color',d=>colScale(likelihoodScale(d.yr)))
         .st('display','visible')
@@ -165,13 +173,10 @@ function updateStepIndicator(){
 
         updateCopy()
     }
-
-    if(currentStep===5){
-
+    if(currentStep===8){
         $chartStatic.classed('hidden', true)
         $chartDynamic.classed('hidden', false)
-
-        $chartStaticTitle.text("5. What's left?")
+        $btnfwd.classed('is-disabled', false)
 
         $sentences
         .classed('hidden',d=>{
@@ -185,29 +190,35 @@ function updateStepIndicator(){
 
         d3.select('.sentence-box').st('height', paraHeight)
     }
-
-    if(currentStep===6){
-
+    if(currentStep===9){
         $chartStatic.classed('hidden', true)
         $chartDynamic.classed('hidden', true)
-
-        $chartStaticTitle.text("6. Method")
+        $btnfwd.classed('is-disabled', false)
 
         updateCopy()
 
         // d3.select('header')
         // .classed('hidden',false)
 
-        d3.select('footer')
-        .classed('hidden',false)
+        //d3.select('footer')
+        //.classed('hidden',false)
+    }
+    if(currentStep===10){
+        $chartStatic.classed('hidden', true)
+        $chartDynamic.classed('hidden', true)
+        $btnfwd.classed('is-disabled', true)
+        updateCopy()
+
     }
 
 }
 
 function handleClickBack(){
     if (currentStep===1){
-      $cover.classed('hidden', false)
-      d3.select('body').style('overflow', 'hidden')
+      $coverRight.classed('slide', false)
+      $coverLeft.classed('slide', false)
+      d3.select('.intro').transition().style('display', 'block')
+      //d3.select('body').style('overflow', 'hidden')
     }
     else{
         currentStep-=1
@@ -215,7 +226,7 @@ function handleClickBack(){
     }
 }
 function handleClickForward(){
-    if (currentStep===6){}
+    if (currentStep===10){}
     else{
         currentStep+=1
         updateStepIndicator()
@@ -237,7 +248,7 @@ function resize() {
 
     colScale = d3.scaleLinear()
         .domain([.625,1])
-        .range(['#fff7f3','#49006a'])
+        .range(['#ff533d','#ffddd8'])
 
 }
 

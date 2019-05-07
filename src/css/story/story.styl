@@ -5,8 +5,35 @@ body
 .prose-para
     margin-top 0
 
+    p
+      set-type-size('x-large', true)
+      line-height 2.5rem
+      margin 1rem 0
+
+        span
+          font-family $sans-display
+          font-weight 600
+          text-transform uppercase
+          set-type-size('xxxx-large', true)
+
+.part-1, .part-3, .part-5
+  p
+    &:last-of-type
+
+      &::before
+        content ''
+        display block
+        width 12rem
+        border-top 2px solid $red
+        margin 6rem 0 0.5rem 0
+
+    span
+      font-family $sans-display
+      font-weight 600
+      text-transform uppercase
+      set-type-size('xxxx-large', true)
+
 .nav-bar
-    top 0
     width 100%
     margin 0 auto 2rem 0
     display flex
@@ -23,6 +50,8 @@ body
     font-family $sans-display
     font-weight 600
     letter-spacing 2px
+    width 4rem
+    text-align center
 
 .nav-btn-img
     height 1rem
@@ -70,6 +99,13 @@ body
       height 1rem
       stroke-width 3px
 
+    &.is-disabled
+      background-color $gray
+      cursor none
+
+      &:hover
+        transform: scale(1)
+
 .chart-nav
     display: flex
     flex-direction: row
@@ -90,7 +126,14 @@ body
     max-width 50rem
     margin 0 auto
     padding 0 1rem
+    position relative
+    height 100vh
 
+.chart-static-meta, .chart-static-container, .chart-static-dynamic
+  margin-top 6rem
+
+.chart-dynamic
+  padding 0 1rem
 
 .chart-static-title
     text-align: left
@@ -139,14 +182,12 @@ body
 .hidden
     display none
 
-.method
+.methods
     max-width $column-width
     margin 0 auto
 
-.method-title
-    text-align: center
-    font-weight: 600
-
-.method-text
-    font-family: 'Tinos'
-    font-size: 14px
+    span
+      font-family $sans-display
+      font-weight 600
+      text-transform uppercase
+      set-type-size('large', true)
