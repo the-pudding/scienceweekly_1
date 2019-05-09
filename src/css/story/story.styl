@@ -2,6 +2,33 @@
 body
   overflow hidden
 
+.story
+  position absolute
+  width 100%
+  height 100vh
+  display flex
+  align-items center
+  background-image url('assets/images/lab.jpg')
+  background-repeat repeat-x
+  background-size auto 100%
+  background-position center
+
+  &.is-chart
+    background transparent
+
+  &.is-methods
+    background  $off-black
+
+    .chart-static-meta
+      background  $off-black
+
+      p, span
+        color $white
+
+      a
+        color $white
+        border-bottom 1px solid $white
+
 .prose-para
     margin-top 0
 
@@ -34,19 +61,29 @@ body
       set-type-size('xxxx-large', true)
 
 .nav-bar
-    width 100%
-    margin 0 auto 2rem 0
+    z-index set-index('overlay')
     display flex
+    position absolute
+    bottom 0rem
+    width 100%
+    margin 0 auto
     flex-direction row
     justify-content center
     align-items center
-    height 3rem
-    background-color $off-black
+
+    &.is-chart
+      .current-slide-num
+        color $off-black
+        text-shadow none
+
+    &.hidden
+      display none
 
 .current-slide-num
-    margin 0 1rem
-    set-type-size('medium', true)
+    margin 0 1rem 3.5rem 0
+    set-type-size('x-large', true)
     color $white
+    text-shadow $off-black 1px 0 10px
     font-family $sans-display
     font-weight 600
     letter-spacing 2px
@@ -60,6 +97,9 @@ body
     cursor pointer
 
 .btn-back
+    position absolute
+    left 3rem
+    bottom 3rem
     display flex
     flex-direction column
     justify-content center
@@ -67,19 +107,21 @@ body
     cursor pointer
     background-color $red
     border-radius 50%
-    width 1.5rem
-    height 1.5rem
+    width 3.5rem
+    height 3.5rem
 
     &:hover
       transform: scale(1.2)
 
     svg
       stroke $white
-      width 1rem
-      height 1rem
-      stroke-width 3px
+      width 60%
+      height 60%
 
 .btn-fwd
+    position absolute
+    right 3rem
+    bottom 3rem
     display flex
     flex-direction column
     justify-content center
@@ -87,17 +129,16 @@ body
     cursor pointer
     background-color $red
     border-radius 50%
-    width 1.5rem
-    height 1.5rem
+    width 3.5rem
+    height 3.5rem
 
     &:hover
       transform: scale(1.2)
 
     svg
       stroke $white
-      width 1rem
-      height 1rem
-      stroke-width 3px
+      width 60%
+      height 60%
 
     &.is-disabled
       background-color $gray
@@ -117,23 +158,41 @@ body
 
 .sentence
     display inline
+    fill $gray-dark
 
 .sentence-box
     text-align justify
     margin-bottom: 0.5rem
 
 .chart-static
-    max-width 50rem
-    margin 0 auto
-    padding 0 1rem
     position relative
+    width 100%
     height 100vh
+    margin -5rem auto 0 auto
+    padding 0
 
-.chart-static-meta, .chart-static-container, .chart-static-dynamic
-  margin-top 6rem
+.chart-static-meta
+  position absolute
+  left 50%
+  top 50%
+  transform translate(-50%, -50%)
+  width 60%
+  padding 3rem
+  background-color rgba($white, 0.9)
+  z-index 850
+  margin 0 auto
 
 .chart-dynamic
-  padding 0 1rem
+  padding 1rem
+  position absolute
+  width 100%
+
+.chart-dynamic-legend
+  opacity 0
+  margin 3rem 0
+
+  &.is-visible
+    opacity 1
 
 .chart-static-title
     text-align: left
