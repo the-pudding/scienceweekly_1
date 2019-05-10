@@ -6,41 +6,58 @@
 
 .cover-container
     display flex
-    flex-direction row
+    flex-direction column
+    +mq('bp-4')
+      flex-direction row
 
 .cover-left
   padding 1rem
   font-family 'Open Sans', sans-serif;
   flex-grow 1
   background-color $white
-  height 100vh
+  height 30vh
   display flex
   flex-direction row
   justify-content center
-  max-width 50vw
+  max-width none
+  width 100%
   position relative
   transform translateX(0)
+  transform translateY(0)
   transition transform 200ms ease-in-out
+  +mq('bp-4')
+    max-width 50vw
+    height 100vh
 
   &.slide
-    transform translateX(-100%)
+    transform translateY(-100%)
+    +mq('bp-4')
+      transform translateX(-100%)
 
   .rotate
     position absolute
-    top 25%
-    transform rotate(-90deg)
+    top 15%
+    transform rotate(0deg)
     font-family $sans-display
     font-size 100px
     font-weight 700
-    text-align right
-    width 19rem
+    text-align left
+    +mq('bp-4')
+      transform rotate(-90deg)
+      top 25%
+      text-align right
+
 
   .weekly-wrapper
     position absolute
-    left 54.5%
-    top 16%
+    left 75%
+    top 49%
     display flex
-    flex-direction row
+    flex-direction column
+    +mq('bp-4')
+      flex-direction row
+      left 54.5%
+      top 16%
 
     .dot-block
       background-color #ff533d
@@ -48,24 +65,36 @@
       height 1rem
 
     h3
-      margin -0.5rem 0 0 0
-      padding 0 0 0 0.25rem
+      margin 0 0 0 -3.55rem
+      padding 0 0 0 3.5rem
       text-transform uppercase
       font-family $sans
       color #ff533d
+      transform rotate(90deg)
+      +mq('bp-4')
+        transform rotate(0deg)
+        margin -0.5rem 0 0 0
+        padding 0 0 0 0.25rem
 
 .cover-right
   padding 1rem
   flex-grow 1
   background-color $off-black
-  height 100vh
-  max-width 50vw
+  height 70vh
+  max-width none
+  width 100%
   position relative
   transform translateX(0)
+  transform translateY(0)
   transition transform 200ms ease-in-out
+  +mq('bp-4')
+    max-width 50vw
+    height 100vh
 
   &.slide
-    transform translateX(100%)
+    transform translateY(100%)
+    +mq('bp-4')
+      transform translateX(100%)
 
   .details
     display flex

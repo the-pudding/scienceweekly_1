@@ -33,9 +33,15 @@ body
     margin-top 0
 
     p
-      set-type-size('x-large', true)
-      line-height 2.5rem
+      set-type-size('root', true)
+      line-height 1.75rem
       margin 1rem 0
+      +mq('bp-3')
+        set-type-size('medium', true)
+        line-height 2rem
+      +mq('bp-4')
+        set-type-size('x-large', true)
+        line-height 2.5rem
 
         span
           font-family $sans-display
@@ -52,13 +58,23 @@ body
         display block
         width 12rem
         border-top 2px solid $red
-        margin 6rem 0 0.5rem 0
+        margin 2rem 0 0.5rem 0
+        +mq('bp-4')
+          margin 4rem 0 0.5rem 0
+        +mq('bp-4')
+          margin 6rem 0 0.5rem 0
 
     span
       font-family $sans-display
       font-weight 600
       text-transform uppercase
-      set-type-size('xxxx-large', true)
+      set-type-size('x-large', true)
+      line-height 1.5rem
+      +mq('bp-3')
+        line-height 2rem
+        set-type-size('xx-large', true)
+      +mq('bp-4')
+        set-type-size('xxxx-large', true)
 
 .nav-bar
     z-index set-index('overlay')
@@ -176,11 +192,16 @@ body
   left 50%
   top 50%
   transform translate(-50%, -50%)
-  width 60%
-  padding 3rem
+  width 85%
+  padding 2rem
   background-color rgba($white, 0.9)
   z-index 850
   margin 0 auto
+  +mq('bp-3')
+    width 80%
+    padding 3rem
+  +mq('bp-4')
+    width 60%
 
 .chart-dynamic
   padding 1rem
@@ -189,7 +210,7 @@ body
 
 .chart-dynamic-legend
   opacity 0
-  margin 3rem 0
+  margin 3rem 0 2rem 0
 
   &.is-visible
     opacity 1
@@ -250,3 +271,6 @@ body
       font-weight 600
       text-transform uppercase
       set-type-size('large', true)
+
+.prose
+  padding 0
