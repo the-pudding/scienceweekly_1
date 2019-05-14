@@ -163,6 +163,30 @@ body
       &:hover
         transform: scale(1)
 
+.spin-imgs
+  width 100%
+  display flex
+  flex-direction column
+  flex-wrap wrap
+  +mq('bp-5')
+    flex-direction row
+
+  .img-wrap
+    width 100%
+    margin 0.5rem 0
+    background-color $white
+    padding 1rem
+    border-top 2px solid $red
+    box-shadow 5px 5px 10px $gray-light
+    +mq('bp-5')
+      width calc(50% - 1rem)
+      margin 0.5rem
+
+    &.hide
+      display none
+      +mq('bp-5')
+        display block
+
 .chart-nav
     display: flex
     flex-direction: row
