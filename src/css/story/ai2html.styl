@@ -1,0 +1,73 @@
+/* CUSTOM STORY STYLE */
+#g-sw1-desktop p, #g-sw1-mid p, #g-sw1-mobile p
+  font-family $sans-display
+  margin 0
+  set-type-size('x-small', true)
+  line-height 1rem
+  +mq('bp-3-5')
+    set-type-size('small', true)
+  +mq('bp-3')
+    set-type-size('root', true)
+
+.g-pstyle0
+  color $gray
+
+.g-pstyle1
+  color $off-black
+  set-type-size('root', true)
+  line-height 1rem
+  text-align center
+
+#g-sw1-box
+  .g-artboard
+	   margin 0 auto
+
+.g-aiAbs
+	position absolute
+
+.g-aiImg
+	display block
+	width 100% !important
+
+.g-aiSymbol
+	position absolute
+	box-sizing border-box
+
+.g-aiPointText p
+  font-family $sans-display
+  white-space  nowrap
+
+#g-sw1-desktop
+  position relative
+  overflow hidden
+  display none
+  +mq('bp-6')
+    display block
+
+#g-sw1-mid
+  position relative
+  overflow hidden
+  display none
+  +mq('bp-5')
+    display block
+  +mq('bp-6')
+    display none
+
+#g-ai0-2 p, #g-ai1-2 p, #g-ai2-2 p
+  set-type-size('root', true)
+  line-height 1.25rem !important
+  +mq('bp-3-5')
+    set-type-size('medium', true)
+    line-height 1.25rem !important
+  +mq('bp-3')
+    line-height 1.25rem !important
+    set-type-size('large', true)
+
+#g-sw1-mobile
+  position relative
+  overflow hidden
+  display block
+  +mq('bp-5')
+    display none
+  +mq('bp-6')
+    display none
