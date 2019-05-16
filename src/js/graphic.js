@@ -24,6 +24,7 @@ let $legendItemsText;
 
 
 let currentStep = 1
+let coverHidden = false;
 let $backButton;
 let $fwdButton;
 let $backOverlay;
@@ -50,14 +51,15 @@ const $navBar = d3.select('.nav-bar')
 /* global d3 */
 
 function handleCoverClick(){
-    //d3.select('body').style('overflow', 'visible')
+    coverHidden=true;
+
     d3.select('section.story').classed('hidden', false)
     $navBar.classed('hidden', false)
 
     $coverRight.classed('slide', true)
     $coverLeft.classed('slide', true)
     d3.select('.intro').transition().delay(250).style('display', 'none')
-
+    
 
 }
 
@@ -234,12 +236,6 @@ function updateStepIndicator(){
         $chartDynamicLegend.classed('is-visible', false)
 
         updateCopy()
-
-        // d3.select('header')
-        // .classed('hidden',false)
-
-        //d3.select('footer')
-        //.classed('hidden',false)
     }
     if(currentStep===10){
         $chartStatic.classed('hidden', true)
@@ -262,7 +258,7 @@ function handleClickBack(){
       $coverLeft.classed('slide', false)
       $navBar.classed('hidden', true)
       d3.select('.intro').transition().style('display', 'block')
-      //d3.select('body').style('overflow', 'hidden')
+      coverHidden=false;
     }
     else{
         currentStep-=1
@@ -316,10 +312,27 @@ function setupDOM() {
     $slideIndicator = d3.select('.current-slide-num')
     $cover = d3.select('.cover-container')
     $story = d3.select('section.story')
+
+    document.addEventListener('keydown', (event) => {
+        const keyName = event.key;        
+    
+        if (keyName === 'ArrowRight') {
+
+            if(!coverHidden){
+                handleCoverClick()
+            }
+            else{
+                handleClickForward()
+            }
+            
+        }
+        else if (keyName==='ArrowLeft'){
+            handleClickBack()
+        }         
+    }, false);
   }
 
   function render() {
-
 
 
     $chartPara = $chartDynamic

@@ -24,5 +24,3 @@ archive:
 # 	aws cloudfront create-invalidation --distribution-id E13X38CRR4E04D --paths '/year/month/name*'	
 
 # pudding: aws-assets aws-htmljs aws-cache archive
-ilia: 
-	echo 'test'
