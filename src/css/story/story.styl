@@ -1,4 +1,5 @@
 /* CUSTOM STORY STYLE */
+
 body
   overflow hidden
 
@@ -29,8 +30,19 @@ body
         color $white
         border-bottom 1px solid $white
 
+.p-1
+    display: none
+    +mq('bp-4')
+        display: block
+.p-2
+    display: none
+    +mq('bp-4')
+        display: block
+
+
+
 .prose-para
-    margin-top 0
+    margin-top 0    
 
     p
       set-type-size('root', true)
@@ -199,10 +211,24 @@ body
 .sentence
     display inline
     fill $gray-dark
+    font-size 9px
 
 .sentence-box
     text-align justify
     margin-bottom: 0.5rem
+    font-family: $mono      
+    border-top-style: dashed 
+    border-bottom-style: dashed 
+    border-top-color: #b1afaf;
+    border-bottom-color: #b1afaf;
+    border-bottom-width: 1px;
+    border-top-width: 1px;  
+    
+
+.sneaky-span
+    position: absolute
+    top 0
+    // left -100%
 
 .chart-static
     position relative
@@ -222,6 +248,10 @@ body
   background-color rgba($white, 0.9)
   z-index 850
   margin 0 auto
+  -webkit-box-shadow: 4px 4px 9px -2px rgba(0,0,0,0.11);
+  -moz-box-shadow: 4px 4px 9px -2px rgba(0,0,0,0.11);
+  box-shadow: 4px 4px 9px -2px rgba(0,0,0,0.11);
+
   +mq('bp-3')
     width 80%
     padding 3rem
@@ -235,7 +265,7 @@ body
 
 .chart-dynamic-legend
   opacity 0
-  margin 3rem 0 2rem 0
+  margin 3rem auto 2rem auto
 
   &.is-visible
     opacity 1
@@ -254,11 +284,13 @@ body
 
 .legend
     margin 0 auto
+    max-width: 15rem
+
 
 .legend-title
     text-align: center
     margin 0
-    font-family: 'Tinos'
+    font-family: $mono
     font-weight: 600
 
 .legend-item-container

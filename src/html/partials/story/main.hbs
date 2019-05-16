@@ -11,6 +11,7 @@
 </div>
 
 <section class='story'>
+    <span class='sneaky-span'>A</span>
 
     <div class='chart-static'>
         <div class='chart-static-meta'>
@@ -22,7 +23,7 @@
             </div>
             <div class='prose-para part-2 hidden'>
               {{#each doc.part2}}
-                <p>{{{value}}}</p>
+                <p class='p-{{@index}}'>{{{value}}}</p>
               {{/each}}
               <div class='spin-imgs'>
                 <div class='img-wrap '>

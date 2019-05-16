@@ -48,6 +48,9 @@ const $slideContents = d3.select('.chart-static')
 const $storyContents = d3.select('.story')
 const $navBar = d3.select('.nav-bar')
 
+const FONT_SIZE = 8
+const LINE_HEIGHT_SMALL = 0.8
+
 /* global d3 */
 
 function handleCoverClick(){
@@ -154,8 +157,8 @@ function updateStepIndicator(){
         $chartPara
         .st('line-height','0.8')
 
-        $sentences
-        .st('font-size',8)
+        // $sentences
+        // .st('font-size',8)
 
         $sentences
         .st('background-color','#FFFFFF')
@@ -187,8 +190,8 @@ function updateStepIndicator(){
         $chartPara
         .st('line-height','0.8')
 
-        $sentences
-        .st('font-size',8)
+        // $sentences
+        // .st('font-size',8)
 
         $sentences
         .transition(2000)
@@ -196,6 +199,14 @@ function updateStepIndicator(){
         .st('background-color',d=>colScale(likelihoodScale(d.yr)))
         .st('color',d=>colScale(likelihoodScale(d.yr)))
         .st('display','visible')
+                .st('font-size',d=>{
+            if (d.yr>10){return 0}
+            return FONT_SIZE
+        })
+        .st('line-height',d=>{
+            if (d.yr>10){return 0}
+            return LINE_HEIGHT_SMALL
+        })   
 
         $sentences
         .classed('hidden',false)
@@ -214,9 +225,23 @@ function updateStepIndicator(){
         $chartDynamicLegend.classed('is-visible', true)
 
         $sentences
-        .classed('hidden',d=>{
-            return d.yr>10? true : false
+        .transition()
+        .delay((d,i)=>i*30)
+        .st('font-size',d=>{
+            if (d.yr>10){return 0}
+            return FONT_SIZE
         })
+        .st('line-height',d=>{
+            if (d.yr>10){return 0}
+            return LINE_HEIGHT_SMALL
+        })        
+        
+        // $sentences
+        // .transition()
+        // .delay(900)
+        // .classed('hidden',d=>{
+        //     return d.yr>10? true : false
+        // })
 
         updateCopy()
 
@@ -289,6 +314,37 @@ function resize() {
     colScale = d3.scaleLinear()
         .domain([.625,1])
         .range(['#ff533d','#ffddd8'])
+    
+    const charWidth = d3.select('span.sneaky-span').node().offsetWidth;
+    const chartHeight = d3.select('span.sneaky-span').node().offsetHeight;
+    const screenWidth = d3.select('.cover-container').node().offsetWidth;
+    const screenHeight = d3.select('.cover-container').node().offsetHeight;
+    
+    console.log(`char width: ${charWidth}, char height: ${chartHeight}`)
+    console.log(`screen width: ${screenWidth}, screen height: ${screenHeight}`)
+    console.log(`updated char width: ${charWidth}, updated char height: ${chartHeight}`)
+
+    const allSentences = []    
+    data.forEach(item=>allSentences.push(item.sentence))
+    let allSentencesFlat = allSentences.join('')
+
+    const numChars = allSentencesFlat.length
+    const screenArea = screenWidth * screenHeight
+    const areaOfEachChar = Math.floor(areaOfEachChar)
+
+    d3.select('span.sneaky-span').st('font-size',8)
+    console.log(d3.select('span.sneaky-span').node().offsetWidth * d3.select('span.sneaky-span').node().offsetHeight)
+    
+
+    console.log(`items in string ${allSentencesFlat.length}`)
+    console.log(`area of one item in string: ${charWidth * chartHeight}`)
+    console.log(`available area: ${screenWidth * screenHeight}`)
+
+    
+
+
+    
+
 
 }
 
@@ -329,11 +385,10 @@ function setupDOM() {
         else if (keyName==='ArrowLeft'){
             handleClickBack()
         }         
-    }, false);
+    }, false);    
   }
 
   function render() {
-
 
     $chartPara = $chartDynamic
         .append('p.sentence-box')
@@ -392,14 +447,6 @@ function setupDOM() {
         .classed('hidden',true)
     $legendItemsText
         .classed('hidden',true)
-
-
-    chartWidth = $chartStatic.node().offsetWidth
-
-    $legend
-        .st('max-width',chartWidth/3)
-
-    // $legend
 
   }
 
