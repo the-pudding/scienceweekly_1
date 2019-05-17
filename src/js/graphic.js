@@ -48,7 +48,7 @@ const $slideContents = d3.select('.chart-static')
 const $storyContents = d3.select('.story')
 const $navBar = d3.select('.nav-bar')
 
-const FONT_SIZE_SMALL = 8
+const FONT_SIZE_SMALL = '6px'
 let FONT_SIZE_LARGE;
 const LINE_HEIGHT_SMALL = 0.8
 let LINE_HEIGHT_LARGE;
@@ -396,8 +396,8 @@ function setupDOM() {
     $sentences.text(d => d.sentence)
 
 
-    FONT_SIZE_LARGE = '9px'
-    LINE_HEIGHT_LARGE = $sentences.st('font-size') 
+    FONT_SIZE_LARGE = '6px'
+    LINE_HEIGHT_LARGE = $sentences.st('line-height') 
 
     console.log(`font size is ${FONT_SIZE_LARGE}, line height is ${LINE_HEIGHT_LARGE}`)
 
