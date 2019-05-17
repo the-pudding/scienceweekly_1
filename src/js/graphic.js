@@ -8,6 +8,7 @@ let screenWidth;
 let $cover;
 
 let $chartStatic;
+let $chartStaticBox;
 let $chartStaticImg;
 let $chartStaticTitle;
 let $chartDynamic;
@@ -54,6 +55,8 @@ let FONT_SIZE_SMALL;
 let FONT_SIZE_LARGE;
 let LINE_HEIGHT_SMALL; 
 let LINE_HEIGHT_LARGE;
+
+let TEXT_BOX_BUMP = '75%'
 
 /* global d3 */
 
@@ -147,6 +150,9 @@ function updateStepIndicator(){
         $chartPara
         .st('line-height','1.65')
 
+        $chartStaticBox
+        .st('top', '50%')
+
         updateCopy()
     }
     if(currentStep===6){
@@ -182,6 +188,13 @@ function updateStepIndicator(){
         $legendItemsText
             .classed('hidden',false)
 
+        $chartStaticBox
+            .st('top', ()=>{
+                if(mob){return TEXT_BOX_BUMP}    
+                return '50%'            
+            })
+            
+
         updateCopy()
     }
 
@@ -211,6 +224,12 @@ function updateStepIndicator(){
         .classed('hidden',false)
 
         // paraHeight=d3.select('.sentence-box').st('height')
+
+        $chartStaticBox
+            .st('top', ()=>{
+                if(mob){return TEXT_BOX_BUMP}    
+                return '50%'            
+            })
 
         updateCopy()
     }
@@ -253,6 +272,12 @@ function updateStepIndicator(){
         d3.select('footer')
         .classed('hidden',true)
 
+        $chartStaticBox
+            .st('top', ()=>{
+                if(mob){return TEXT_BOX_BUMP}    
+                return '50%'            
+            })
+
         // d3.select('.sentence-box').st('height', paraHeight)
     }
     if(currentStep===9){
@@ -264,6 +289,9 @@ function updateStepIndicator(){
         $storyContents.classed('is-methods', false)
         $navBar.classed('is-chart', false)
         $chartDynamicLegend.classed('is-visible', false)
+
+        $chartStaticBox
+        .st('top', '50%')
 
         updateCopy()
     }
@@ -362,6 +390,7 @@ function setupDOM() {
     $chartDynamic = d3.select('div.chart-dynamic-chart');
     $chartDynamicLegend = d3.select('div.chart-dynamic-legend');
 
+    $chartStaticBox = d3.select('.chart-static-meta')
     $chartStaticTitle = d3.select('p.chart-static-title')
     $chartStaticImg = $chartStatic.select('img')
 
