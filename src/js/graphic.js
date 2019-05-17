@@ -4,6 +4,7 @@ let data;
 let $prose;
 
 let chartWidth;
+let screenWidth;
 let $cover;
 
 let $chartStatic;
@@ -25,6 +26,7 @@ let $legendItemsText;
 
 let currentStep = 1
 let coverHidden = false;
+let mob;
 let $backButton;
 let $fwdButton;
 let $backOverlay;
@@ -48,9 +50,9 @@ const $slideContents = d3.select('.chart-static')
 const $storyContents = d3.select('.story')
 const $navBar = d3.select('.nav-bar')
 
-const FONT_SIZE_SMALL = '6px'
+let FONT_SIZE_SMALL;
 let FONT_SIZE_LARGE;
-const LINE_HEIGHT_SMALL = 0.8
+let LINE_HEIGHT_SMALL; 
 let LINE_HEIGHT_LARGE;
 
 /* global d3 */
@@ -157,14 +159,17 @@ function updateStepIndicator(){
         $chartDynamicLegend.classed('is-visible', false)
 
         $chartPara
-        .st('line-height','0.8')
+        .st('line-height',LINE_HEIGHT_SMALL)
 
         // $sentences
         // .st('font-size',8)
 
         $sentences
+        .transition()
+        .delay((d,i)=>data.length -i *5)
         .st('background-color','#FFFFFF')
         .st('color','#282828')
+        .st('font-size',FONT_SIZE_SMALL)
 
         $legendTitle
             .classed('hidden',false)
@@ -190,27 +195,21 @@ function updateStepIndicator(){
         $chartDynamicLegend.classed('is-visible', true)
 
         $chartPara
-        .st('line-height','0.8')
-
-        console.log(`font size original: ${$sentences.st('font-size')}`)
-        console.log(`line height original: ${$sentences.st('line-height')}`)
+        .st('line-height',LINE_HEIGHT_SMALL)
 
         $sentences
-        .transition(2000)
+        .transition()
         .delay((d, i) => i * 5)
         .st('background-color',d=>colScale(likelihoodScale(d.yr)))
         .st('color',d=>colScale(likelihoodScale(d.yr)))
         .st('display','visible')
-        .st('font-size',FONT_SIZE_LARGE)
-        // .st('line-height',d=>{
-        //     // if (d.yr>10){return 0}
-        //     return LINE_HEIGHT_LARGE
-        // })   
+        .st('font-size',FONT_SIZE_SMALL)
+
 
         $sentences
         .classed('hidden',false)
 
-        paraHeight=d3.select('.sentence-box').st('height')
+        // paraHeight=d3.select('.sentence-box').st('height')
 
         updateCopy()
     }
@@ -225,7 +224,7 @@ function updateStepIndicator(){
 
         $sentences
         .transition()
-        .delay((d,i)=>i*15)
+        .delay((d,i)=>i*5)
         .st('font-size',d=>{
             if (d.yr>10){return 0}
             return FONT_SIZE_SMALL
@@ -234,6 +233,8 @@ function updateStepIndicator(){
             if (d.yr>10){return 0}
             return LINE_HEIGHT_SMALL
         })        
+
+        
         
         // $sentences
         // .transition()
@@ -247,7 +248,7 @@ function updateStepIndicator(){
         d3.select('footer')
         .classed('hidden',true)
 
-        d3.select('.sentence-box').st('height', paraHeight)
+        // d3.select('.sentence-box').st('height', paraHeight)
     }
     if(currentStep===9){
         $chartStatic.classed('hidden', true)
@@ -311,13 +312,19 @@ function resize() {
         .range([0.625,	0.625,	0.739130434782609,	0.742424242424242,	0.742424242424242,	0.760869565217391,	0.813953488372093,	0.85,	0.85,	0.85,	0.923076923076923,	0.923076923076923,	0.923076923076923])
 
     colScale = d3.scaleLinear()
-        .domain([.625,1])
-        .range(['#ff533d','#ffddd8'])
+        .domain([.625,.923076923076923])
+        .range(['#ff533d','#fff4f3'])
     
         // Figuring out character font size
     // const charWidth = d3.select('span.sneaky-span').node().offsetWidth;
     // const chartHeight = d3.select('span.sneaky-span').node().offsetHeight;
-    // const screenWidth = d3.select('.cover-container').node().offsetWidth;
+    screenWidth = d3.select('.cover-container').node().offsetWidth;
+    mob = screenWidth<600? true:false;
+    LINE_HEIGHT_SMALL =  mob? '0.4':'0.8'  
+
+    FONT_SIZE_LARGE = '6px'
+    FONT_SIZE_SMALL = mob? '2px': '6px'
+    
     // const screenHeight = d3.select('.cover-container').node().offsetHeight;
     
     // console.log(`char width: ${charWidth}, char height: ${chartHeight}`)
@@ -394,12 +401,11 @@ function setupDOM() {
 
     $sentences = sentencesJoin.append('span.sentence');
     $sentences.text(d => d.sentence)
-
-
-    FONT_SIZE_LARGE = '6px'
+        .st('line-height',LINE_HEIGHT_SMALL)
+    
     LINE_HEIGHT_LARGE = $sentences.st('line-height') 
 
-    console.log(`font size is ${FONT_SIZE_LARGE}, line height is ${LINE_HEIGHT_LARGE}`)
+    // console.log(`font size is ${FONT_SIZE_LARGE}, line height is ${LINE_HEIGHT_LARGE}`) 
 
     $arrow.on('click', handleCoverClick)
     $backButton.on('click',handleClickBack)
@@ -413,7 +419,7 @@ function setupDOM() {
     $legendItemContainer = $legend.append('p.legend-item-container')
 
     $legendTitle
-        .text('Likelihood of original data availability')
+        .text('Likelihood of data being inaccessible')
         // .classed('hidden', true)
 
 
