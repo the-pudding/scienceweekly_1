@@ -48,8 +48,10 @@ const $slideContents = d3.select('.chart-static')
 const $storyContents = d3.select('.story')
 const $navBar = d3.select('.nav-bar')
 
-const FONT_SIZE = 8
+const FONT_SIZE_SMALL = 8
+let FONT_SIZE_LARGE;
 const LINE_HEIGHT_SMALL = 0.8
+let LINE_HEIGHT_LARGE;
 
 /* global d3 */
 
@@ -190,8 +192,8 @@ function updateStepIndicator(){
         $chartPara
         .st('line-height','0.8')
 
-        // $sentences
-        // .st('font-size',8)
+        console.log(`font size original: ${$sentences.st('font-size')}`)
+        console.log(`line height original: ${$sentences.st('line-height')}`)
 
         $sentences
         .transition(2000)
@@ -199,14 +201,11 @@ function updateStepIndicator(){
         .st('background-color',d=>colScale(likelihoodScale(d.yr)))
         .st('color',d=>colScale(likelihoodScale(d.yr)))
         .st('display','visible')
-                .st('font-size',d=>{
-            if (d.yr>10){return 0}
-            return FONT_SIZE
-        })
-        .st('line-height',d=>{
-            if (d.yr>10){return 0}
-            return LINE_HEIGHT_SMALL
-        })   
+        .st('font-size',FONT_SIZE_LARGE)
+        // .st('line-height',d=>{
+        //     // if (d.yr>10){return 0}
+        //     return LINE_HEIGHT_LARGE
+        // })   
 
         $sentences
         .classed('hidden',false)
@@ -226,10 +225,10 @@ function updateStepIndicator(){
 
         $sentences
         .transition()
-        .delay((d,i)=>i*30)
+        .delay((d,i)=>i*15)
         .st('font-size',d=>{
             if (d.yr>10){return 0}
-            return FONT_SIZE
+            return FONT_SIZE_SMALL
         })
         .st('line-height',d=>{
             if (d.yr>10){return 0}
@@ -315,36 +314,31 @@ function resize() {
         .domain([.625,1])
         .range(['#ff533d','#ffddd8'])
     
-    const charWidth = d3.select('span.sneaky-span').node().offsetWidth;
-    const chartHeight = d3.select('span.sneaky-span').node().offsetHeight;
-    const screenWidth = d3.select('.cover-container').node().offsetWidth;
-    const screenHeight = d3.select('.cover-container').node().offsetHeight;
+        // Figuring out character font size
+    // const charWidth = d3.select('span.sneaky-span').node().offsetWidth;
+    // const chartHeight = d3.select('span.sneaky-span').node().offsetHeight;
+    // const screenWidth = d3.select('.cover-container').node().offsetWidth;
+    // const screenHeight = d3.select('.cover-container').node().offsetHeight;
     
-    console.log(`char width: ${charWidth}, char height: ${chartHeight}`)
-    console.log(`screen width: ${screenWidth}, screen height: ${screenHeight}`)
-    console.log(`updated char width: ${charWidth}, updated char height: ${chartHeight}`)
+    // console.log(`char width: ${charWidth}, char height: ${chartHeight}`)
+    // console.log(`screen width: ${screenWidth}, screen height: ${screenHeight}`)
+    // console.log(`updated char width: ${charWidth}, updated char height: ${chartHeight}`)
 
-    const allSentences = []    
-    data.forEach(item=>allSentences.push(item.sentence))
-    let allSentencesFlat = allSentences.join('')
+    // const allSentences = []    
+    // data.forEach(item=>allSentences.push(item.sentence))
+    // let allSentencesFlat = allSentences.join('')
 
-    const numChars = allSentencesFlat.length
-    const screenArea = screenWidth * screenHeight
-    const areaOfEachChar = Math.floor(areaOfEachChar)
+    // const numChars = allSentencesFlat.length
+    // const screenArea = screenWidth * screenHeight
+    // const areaOfEachChar = Math.floor(areaOfEachChar)
 
-    d3.select('span.sneaky-span').st('font-size',8)
-    console.log(d3.select('span.sneaky-span').node().offsetWidth * d3.select('span.sneaky-span').node().offsetHeight)
-    
-
-    console.log(`items in string ${allSentencesFlat.length}`)
-    console.log(`area of one item in string: ${charWidth * chartHeight}`)
-    console.log(`available area: ${screenWidth * screenHeight}`)
-
+    // d3.select('span.sneaky-span').st('font-size',8)
+    // console.log(d3.select('span.sneaky-span').node().offsetWidth * d3.select('span.sneaky-span').node().offsetHeight)
     
 
-
-    
-
+    // console.log(`items in string ${allSentencesFlat.length}`)
+    // console.log(`area of one item in string: ${charWidth * chartHeight}`)
+    // console.log(`available area: ${screenWidth * screenHeight}`)
 
 }
 
@@ -400,6 +394,12 @@ function setupDOM() {
 
     $sentences = sentencesJoin.append('span.sentence');
     $sentences.text(d => d.sentence)
+
+
+    FONT_SIZE_LARGE = '9px'
+    LINE_HEIGHT_LARGE = $sentences.st('font-size') 
+
+    console.log(`font size is ${FONT_SIZE_LARGE}, line height is ${LINE_HEIGHT_LARGE}`)
 
     $arrow.on('click', handleCoverClick)
     $backButton.on('click',handleClickBack)
