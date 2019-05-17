@@ -194,16 +194,17 @@ function updateStepIndicator(){
         $navBar.classed('is-chart', true)
         $chartDynamicLegend.classed('is-visible', true)
 
-        $chartPara
-        .st('line-height',LINE_HEIGHT_SMALL)
+        // $chartPara
+        // .st('line-height',LINE_HEIGHT_SMALL)
 
         $sentences
         .transition()
         .delay((d, i) => i * 5)
         .st('background-color',d=>colScale(likelihoodScale(d.yr)))
-        .st('color',d=>colScale(likelihoodScale(d.yr)))
-        .st('display','visible')
+        .st('color',d=>colScale(likelihoodScale(d.yr)))      
+        .st('display','inline')   
         .st('font-size',FONT_SIZE_SMALL)
+          
 
 
         $sentences
@@ -232,6 +233,10 @@ function updateStepIndicator(){
         .st('line-height',d=>{
             if (d.yr>10){return 0}
             return LINE_HEIGHT_SMALL
+        })
+        .st('display',d=>{
+            if (d.yr>10){return 'none'}
+            return 'inline'
         })        
 
         
