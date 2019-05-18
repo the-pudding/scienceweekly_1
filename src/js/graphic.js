@@ -39,6 +39,7 @@ let sentencesJoin;
 let $sentences;
 let likelihoodScale;
 let colScale;
+let colorThresholdScale;
 
 let legendPercentages = [90,80,70,62.5]
 
@@ -367,10 +368,11 @@ function resize() {
         .domain([0,	2,	4,	6,	8,	10,	12,	14,	16,	18,	20,	22,	100])
         .range([0.625,	0.625,	0.739130434782609,	0.742424242424242,	0.742424242424242,	0.760869565217391,	0.813953488372093,	0.85,	0.85,	0.85,	0.923076923076923,	0.923076923076923,	0.923076923076923])
 
-    colScale = d3.scaleLinear()
-        .domain([.625,.923076923076923])
-        .range(['#ff533d','#fff4f3'])
-    
+
+    colScale = d3.scaleThreshold()
+        .domain([0.625, 0.7, 0.8, 0.9])
+        .range(['#FFF','#ff533d', '#ff937d', '#ffc6b9', '#fff4f3'])
+
         // Figuring out character font size
     // const charWidth = d3.select('span.sneaky-span').node().offsetWidth;
     // const chartHeight = d3.select('span.sneaky-span').node().offsetHeight;
