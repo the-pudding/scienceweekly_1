@@ -16,6 +16,7 @@ let $chartDynamicLegend;
 let $chartDynamicContainer;
 let $chartPara;
 let $story;
+let $links;
 
 let $legend;
 let $legendTitle;
@@ -51,22 +52,37 @@ const $slideContents = d3.select('.chart-static')
 const $storyContents = d3.select('.story')
 const $navBar = d3.select('.nav-bar')
 
+let linkHover = false;
+
 let FONT_SIZE_SMALL;
 let FONT_SIZE_LARGE;
 let LINE_HEIGHT_SMALL; 
-let LINE_HEIGHT_LARGE;
-
+let LINE_HEIGHT_LARGE; 
 let TEXT_BOX_BUMP = '75%'
 
 /* global d3 */
 
 
-function clone(selector) {
-    var node = d3.select(selector).node();
-    return d3.select(node.parentNode.insertBefore(node.cloneNode(true), node.nextSibling));
+
+
+function handleLinkClick(){
+    $story.on('click',()=>{})
 }
 
+function handleNonLinkClick(){
+    $story.on('click',function(){                
+        const xCoord = d3.mouse(this)[0]                        
+        const storyElWidth = $story.node().offsetWidth
+        const threshold = storyElWidth/2;
 
+        if (xCoord>threshold){
+            !coverHidden? handleCoverClick() : handleClickForward()
+        }
+        else{
+            handleClickBack()
+        }
+    })
+}
 
 function handleCoverClick(){
     coverHidden=true;
@@ -77,8 +93,6 @@ function handleCoverClick(){
     $coverRight.classed('slide', true)
     $coverLeft.classed('slide', true)
     d3.select('.intro').transition().delay(250).style('display', 'none')
-    
-
 }
 
 function updateCopy(){
@@ -412,6 +426,7 @@ function setupDOM() {
     $slideIndicator = d3.select('.current-slide-num')
     $cover = d3.select('.cover-container')
     $story = d3.select('section.story')
+    $links = d3.selectAll('a')
 
     document.addEventListener('keydown', (event) => {
         const keyName = event.key;        
@@ -430,6 +445,13 @@ function setupDOM() {
             handleClickBack()
         }         
     }, false);    
+
+    // Setting up link clicking properly
+    $links
+        .on('mouseover', handleLinkClick)
+        .on('mouseout', handleNonLinkClick)
+
+
   }
 
   function render() {
@@ -498,17 +520,9 @@ function setupDOM() {
         .classed('hidden',true)
     $legendItemsText
         .classed('hidden',true)
-      }
+}
     
-    
- 
-        // console.log(d3.mouse(this));
-        // const xCoord = coordinates[0];
-        // const yCoord = coordinates[1];
-        // console.log(`clicked ${xCoord},${yCoord}`)
-    })
 
-  }
 
 
   function init() {
