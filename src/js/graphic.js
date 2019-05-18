@@ -223,7 +223,7 @@ function updateStepIndicator(){
         $sentences
         .classed('hidden',false)
 
-        // paraHeight=d3.select('.sentence-box').st('height')
+        paraHeight=d3.select('.sentence-box').st('height')
 
         $chartStaticBox
             .st('top', ()=>{
@@ -278,7 +278,8 @@ function updateStepIndicator(){
                 return '50%'            
             })
 
-        // d3.select('.sentence-box').st('height', paraHeight)
+        d3.select('.sentence-box').st('height', paraHeight)
+        console.log(paraHeight)
     }
     if(currentStep===9){
         $chartStatic.classed('hidden', true)
@@ -353,7 +354,7 @@ function resize() {
     // const chartHeight = d3.select('span.sneaky-span').node().offsetHeight;
     screenWidth = d3.select('.cover-container').node().offsetWidth;
     mob = screenWidth<600? true:false;
-    LINE_HEIGHT_SMALL =  mob? '0.4':'0.8'  
+    LINE_HEIGHT_SMALL =  mob? '0.195':'0.8'  
 
     FONT_SIZE_LARGE = '6px'
     FONT_SIZE_SMALL = mob? '2px': '6px'
@@ -432,6 +433,8 @@ function setupDOM() {
       .selectAll('span.sentence')
       .data(data)
       .enter();
+
+    console.log(d3.select('.link').st('left'))
 
     $sentences = sentencesJoin.append('span.sentence');
     $sentences.text(d => d.sentence)
