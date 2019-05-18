@@ -302,7 +302,7 @@ function updateStepIndicator(){
             })
 
         d3.select('.sentence-box').st('height', paraHeight)
-        console.log(paraHeight)
+        // console.log(paraHeight)
     }
     if(currentStep===9){
         $chartStatic.classed('hidden', true)
@@ -466,7 +466,7 @@ function setupDOM() {
       .data(data)
       .enter();
 
-    console.log(d3.select('.link').st('left'))
+    // console.log(d3.select('.link').st('left'))
 
     $sentences = sentencesJoin.append('span.sentence');
     $sentences.text(d => d.sentence)

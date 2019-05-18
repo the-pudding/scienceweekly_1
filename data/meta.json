@@ -3,14 +3,14 @@
 	"description": "In this edition of Science etc., we look at the raw data behind scientific papers: how well does science cater to reproducibility?",
 	"url": "https://pudding.cool/2019/05/science_etc_1/",
 	"keywords": "data replication science",
-	"imgFacebook": "https://pudding.cool/2019/05/science_etc_1/assets/social/social-facebook.png",
-	"imgTwitter": "https://pudding.cool/2019/05/science_etc_1/assets/social/social-twitter.png",
+	"imgFacebook": "https://pudding.cool/2019/05/science_etc_1/assets/social/social-facebook.jpg",
+	"imgTwitter": "https://pudding.cool/2019/05/science_etc_1/assets/social/social-twitter.jpg",
 	"author": {
 		"name": "Ilia Blinderman",
 		"url": "https://pudding.cool/author/ilia-blinderman",
         "twitterHandle": "@iliablinderman",
         "address":"The Pudding, New York City, NY, USA, 10101"
 	},
-	"analytics": "",
+	"analytics": "UA-90567923-1",
 	"lorem": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis mollis neque sit amet sollicitudin vehicula. Maecenas fringilla mi non lacus mattis elementum. Curabitur dignissim faucibus justo."
 }
