@@ -60,6 +60,14 @@ let TEXT_BOX_BUMP = '75%'
 
 /* global d3 */
 
+
+function clone(selector) {
+    var node = d3.select(selector).node();
+    return d3.select(node.parentNode.insertBefore(node.cloneNode(true), node.nextSibling));
+}
+
+
+
 function handleCoverClick(){
     coverHidden=true;
 
@@ -490,6 +498,15 @@ function setupDOM() {
         .classed('hidden',true)
     $legendItemsText
         .classed('hidden',true)
+      }
+    
+    
+ 
+        // console.log(d3.mouse(this));
+        // const xCoord = coordinates[0];
+        // const yCoord = coordinates[1];
+        // console.log(`clicked ${xCoord},${yCoord}`)
+    })
 
   }
 
